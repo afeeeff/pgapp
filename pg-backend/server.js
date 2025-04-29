@@ -17,7 +17,7 @@ app.use('/payment', paymentRoutess);
 app.use(cors({
   origin: [
     process.env.FRONTEND_URL || 'http://localhost:3000',
-    'https://your-netlify-app.netlify.app'
+    'https://afeefspg.onrender.com/'
   ],
   credentials: true
 }));
