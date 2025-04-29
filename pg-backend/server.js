@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // Initialize Stripe with secret key
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 // Import routes
 const userRoutes = require('./routes/users');
@@ -10,10 +10,8 @@ const paymentRoutes = require('./routes/payments');
 const ownerRoutes = require('./routes/owner');
 const paymentRoutess = require('./routes/payment');
 
-
 const app = express();
 app.use('/payment', paymentRoutess);
-
 
 // Middleware
 app.use(cors({
@@ -30,7 +28,6 @@ mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('✅ MongoDB Connected'))
   .catch(err => console.error('❌ MongoDB Error:', err));
 
-// Stripe Payment Intent Endpoint (for client-side confirmation)
 // Stripe Payment Intent Endpoint
 app.post('/api/create-payment-intent', async (req, res) => {
   try {
@@ -41,7 +38,7 @@ app.post('/api/create-payment-intent', async (req, res) => {
     }
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: Math.round(amount * 100), // Convert to paise
+      amount: Math.round(amount * 100),
       currency: 'inr',
       automatic_payment_methods: {
         enabled: true,
@@ -57,7 +54,7 @@ app.post('/api/create-payment-intent', async (req, res) => {
   }
 });
 
-// Use your existing routes
+// Routes
 app.use('/api/users', userRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/owner', ownerRoutes);
@@ -66,7 +63,6 @@ app.use('/api/owner', ownerRoutes);
 app.get('/', (req, res) => {
   res.send('PG Automation Backend is Running 🚀');
 });
-
 
 // Start server
 const PORT = process.env.PORT || 5000;
