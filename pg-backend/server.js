@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const stripe = require('stripe')('REDACTED51RI4JE2RYxgGiQ1OobaimU1MUORof6uYD5tUBgnkdIuKu6f92Z5XvRE2JSaAx12IAg3SaYcgoJpnjwBUlKht2Jx200pZXLiNJ7'); // Initialize Stripe with secret key
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // Initialize Stripe with secret key
 
 // Import routes
 const userRoutes = require('./routes/users');
