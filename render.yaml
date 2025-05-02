@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: pg-backend
+    runtime: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: MONGODB_URI
+        value: mongodb+srv://safeef16:J08qKBey3ynhgWHB@cluster0.t8gyq3k.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      - key: STRIPE_SECRET_KEY
+        fromGroup: REDACTED51RI4JE2RYxgGiQ1OobaimU1MUORof6uYD5tUBgnkdIuKu6f92Z5XvRE2JSaAx12IAg3SaYcgoJpnjwBUlKht2Jx200pZXLiNJ7
+      - key: PORT
+        value: 5000
+
+  - type: static_site
+    name: pg-frontend
+    buildCommand: npm install && npm run build
+    publishDir: ./build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://pg-backend.onrender.com
+      - key: REACT_APP_STRIPE_PUBLIC_KEY
+        fromGroup: pk_test_51RI4JE2RYxgGiQ1OHkrWl5Nm7W6brFecxKWvEF8VzWxw2dAVUcWdc4YM73KtGqw4VQ8Go7kYBNt9tq4ge5QpZGCc00r9pavBhe
